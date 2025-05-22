@@ -20,10 +20,14 @@ def province_selection(r:float):
             print("You've selected Ontario")
             return 0.13
         case "2":
-            ns=input("You've selected Atlantic Provinces, hmmm, there is a change in HST for Nova Scotia, is this a sale that occured in Nova Scotia?")
+            while True:
+                ns=input("You've selected Atlantic Provinces, hmmm, there is a change in HST for Nova Scotia, is this a sale that occured in Nova Scotia?")
+                if re.search(r"^[0-1]$",ns):
+                    break
+                print("No!")
             # NS changed their GST rate to 14% for sales on or after April 1, 2025
             if ns == "1":
-                if input("Is this a sale that happened after April 1, 2025? If yes, put 1 here, if not press any key ") == "1":
+                if input("Is this a sale that happened after April 1, 2025? If yes, put 1 here, if not press 0 ") == "1":
                     return 0.14
                 else:
                     return 0.15
