@@ -1,3 +1,4 @@
+import re
 # Main Program
 def main():
     rate = None
@@ -8,19 +9,27 @@ def main():
     print(f"Total price is ${Total_Price:.2f}, GST is {GST:.2f} and pre-tax is {pretax:.2f}")
 # Province Selection, Different provinces have different GST/HST rates. For example: ON has a 13% HST while AB has a lower rate of 5%.
 def province_selection(r:float):
-    selection = input("Please select your province. For Ontario, select 1, For
-                      Atlantic provinces, select 2. For other provinces, select
-                      3. ")
+    while True:
+        selection = input("Please select your province. For Ontario, select 1, For Atlantic provinces, select 2. For other provinces, select 3. ")
+        if re.search(r"^[1-3]$",selection):
+            break
+        print("Wrong!")
+    
     match selection:
         case "1":
             print("You've selected Ontario")
             return 0.13
         case "2":
-            ns=input("You've selected Atlantic Provinces, hmmm, there is a
-                     change in HST for Nova Scotia, is this a sale that occured
-                     in Nova Scotia?")
+            ns=input("You've selected Atlantic Provinces, hmmm, there is a change in HST for Nova Scotia, is this a sale that occured in Nova Scotia?")
+            # NS changed their GST rate to 14% for sales on or after April 1, 2025
             if ns == "1":
-                if input("Is this a sale that happened after April 1, 2025?") == "1":
-                    pass
+                if input("Is this a sale that happened after April 1, 2025? If yes, put 1 here, if not press any key ") == "1":
+                    return 0.14
+                else:
+                    return 0.15
+            return 0.15
+        #For provinces that are not atlantic and Ontario.
+        case "3":
+            return 0.05
 if __name__ == "__main__":
 	main()
